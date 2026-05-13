@@ -2,7 +2,7 @@ library(pacman)
 p_load(tidyverse, magrittr, tidyRSS, blastula, cronR)
 
 #set up path
-morning <- cron_rscript("/Users/sophiewill/Documents/Data Projects/feedsandalerts/code/01-setting-up-RSS.R")
+morning <- cron_rscript("/Users/sophiewill/Documents/Data Projects/feedsandalerts/code/01-setting-up-morning-RSS.R")
 afternoon <- cron_rscript("/Users/sophiewill/Documents/Data Projects/feedsandalerts/code/02-afternoon-RSS.R")
 evening <- cron_rscript("/Users/sophiewill/Documents/Data Projects/feedsandalerts/code/03-evening-RSS.R")
 
@@ -13,7 +13,7 @@ evening <- cron_rscript("/Users/sophiewill/Documents/Data Projects/feedsandalert
 # #then remove it
 # cron_clear(ask = TRUE, user = "")
 # #and check it's gone
-# cron_ls()
+cron_ls()
 
 #add actual schedule
 cron_add(command = morning, frequency = 'daily', at = "07:00", id = "Morning Daily FedReg",

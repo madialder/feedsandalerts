@@ -120,7 +120,7 @@ smtp_password <- Sys.getenv("SMTP_PASSWORD")
 email %>%  smtp_send(
   to = "sophie.will@fedscoop.com",
   from = "ksophiewill@gmail.com",
-  subject = "Afternoon Fed Register Updates",
+  subject = "Evening Fed Register Updates",
   credentials = creds_envvar(
     user = "ksophiewill@gmail.com",
     pass_envvar = "SMTP_PASSWORD",
