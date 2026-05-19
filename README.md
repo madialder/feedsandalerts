@@ -46,14 +46,14 @@ This repository automates RSS feeds to customized email alerts.
 
 ### INFO FOR CAFFEINATE
 
-# install screen if needed
+###install screen if needed
 
 brew install screen
 
-# start a named session
+###start a named session
 
 screen -S RSSfeeds
 
-#run caffeinate in screen
+###run caffeinate in screen
 
 caffeinate -ism Rscript /path/to/scheduler.R
