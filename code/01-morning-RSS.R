@@ -1,6 +1,9 @@
 library(pacman)
 p_load(tidyverse, magrittr, tidyRSS, blastula, knitr)
 
+#set wd to fix connection error
+setwd("/Users/sophiewill/Documents/data_projects/feedsandalerts")
+
 morning_fn <- function() {
   #set today
   today <- as.Date(Sys.Date())
@@ -35,14 +38,15 @@ morning_fn <- function() {
   
   #### FEDERAL REGISTER ####
   #read in registers 
-  registers <- read.csv("./data/created/fedreg/fedreg.csv")
+  registers <- read.csv("/Users/sophiewill/Documents/data_projects/feedsandalerts/data/created/fedreg/fedreg.csv")
+  
   
   #run function and set names 
   registers_results <- map2(registers$name, registers$link, make_lists) %>%
     setNames(registers$name)
   
     #write that
-    write_rds(registers_results, "./data/created/fedreg/morning_register.rds")
+  write_rds(registers_results, "/Users/sophiewill/Documents/data_projects/feedsandalerts/data/created/fedreg/morning_register.rds")
   
   #put them each into the environment
   list2env(registers_results, envir = .GlobalEnv)
@@ -51,14 +55,14 @@ morning_fn <- function() {
   #### GAO ####
 
   #read in registers 
-  gao <- read.csv("./data/created/gao/gao.csv")
+  gao <- read.csv("/Users/sophiewill/Documents/data_projects/feedsandalerts/data/created/gao/gao.csv")
   
   #run function and set names 
   gao_results <- map2(gao$name, gao$link, make_lists) %>%
     setNames(gao$name)
   
   #write that
-  write_rds(gao_results, "./data/created/fedreg/morning_gao.rds")
+  write_rds(gao_results, "/Users/sophiewill/Documents/data_projects/feedsandalerts/data/created/gao/morning_gao.rds")
   
   #put them each into the environment
   list2env(gao_results, envir = .GlobalEnv)

@@ -5,15 +5,22 @@ source("/Users/sophiewill/Documents/data_projects/feedsandalerts/code/01-morning
 source("/Users/sophiewill/Documents/data_projects/feedsandalerts/code/02-afternoon-RSS.R")
 source("/Users/sophiewill/Documents/data_projects/feedsandalerts/code/03-evening-RSS.R")
 
-# wrap each send in a safe function so one failure doesn't kill the scheduler
-safe_run <- function(label, fn) {
-  tryCatch({
-    message("[", Sys.time(), "] Running ", label)
-    fn()
-    message("[", Sys.time(), "] Completed ", label)
-  }, error = function(e) {
-    message("[", Sys.time(), "] ERROR in ", label, ": ", e$message)
-  })
+# wrap each send in a safe function so one failure doesn't kill the scheduler, tries three times
+safe_run <- function(label, fn, retries = 3) {
+  for (attempt in seq_len(retries)) {
+    result <- tryCatch({
+      message("[", Sys.time(), "] Running ", label, 
+              if (attempt > 1) paste0(" (attempt ", attempt, ")") else "")
+      fn()
+      message("[", Sys.time(), "] Completed ", label)
+      return(invisible(TRUE))
+    }, error = function(e) {
+      message("[", Sys.time(), "] ERROR in ", label, ": ", e$message)
+      if (attempt < retries) Sys.sleep(30)  # wait 30 seconds before retrying
+      return(invisible(FALSE))
+    })
+  }
+  message("[", Sys.time(), "] FAILED ", label, " after ", retries, " attempts")
 }
 
 #daily schedule
