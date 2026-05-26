@@ -1,9 +1,10 @@
 library(pacman)
 p_load(tidyverse, later)
 
-source("/Users/sophiewill/Documents/data_projects/feedsandalerts/code/01-morning-RSS.R")
-source("/Users/sophiewill/Documents/data_projects/feedsandalerts/code/02-afternoon-RSS.R")
-source("/Users/sophiewill/Documents/data_projects/feedsandalerts/code/03-evening-RSS.R")
+#file path
+file_path <- "/Users/sophiewill/Documents/data_projects/feedsandalerts"
+
+source(paste0(file_path, "/code/01-RSS-setup.R"))
 
 # wrap each send in a safe function so one failure doesn't kill the scheduler, tries three times
 safe_run <- function(label, fn, retries = 3) {
@@ -47,9 +48,9 @@ schedule_daily <- function(label, hour, minute, task_fn) {
 }
 
 # your three jobs
-schedule_daily("Morning",   7,  0,  morning_fn)
-schedule_daily("Afternoon", 13, 0,  afternoon_fn)
-schedule_daily("Evening",   23, 59, evening_fn)
+schedule_daily("Morning",   7,  0,  rss_fn)
+schedule_daily("Afternoon", 14, 09,  rss_fn)
+schedule_daily("Evening",   23, 45, rss_fn)
 
 # keep the session alive and let later's event loop tick
 message("Scheduler running. Detach with Ctrl+A then D.")

@@ -1,0 +1,9 @@
+
+#Creds
+.DS_Store
+
+#log
+email_log.txt
+
+#database
+feeds_database.db
